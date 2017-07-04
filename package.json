@@ -3,23 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "history": "4.6.1",
     "immutable": "3.8.1",
     "invariant": "2.2.2",
     "lint-staged": "4.0.0",
     "localforage": "1.5.0",
     "prop-types": "15.5.10",
-    "react": "15.4.1",
-    "react-dom": "15.4.1",
-    "react-redux": "4.4.6",
-    "react-router": "3.0.0",
-    "react-router-redux": "4.0.6",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-loadable": "4.0.3",
+    "react-redux": "5.0.5",
+    "react-router-dom": "4.1.1",
+    "react-router-redux": "5.0.0-alpha.6",
     "react-scripts": "1.0.10",
     "redux": "3.6.0",
-    "redux-immutable": "3.0.8",
+    "redux-immutable": "4.0.0",
     "redux-persist-immutable": "4.3.0",
     "redux-saga": "0.15.4",
-    "reselect": "2.5.4",
-    "sanitize.css": "4.1.0",
+    "reselect": "3.0.1",
+    "sanitize.css": "5.0.0",
+    "styled-components": "2.1.1",
     "warning": "3.0.0"
   },
   "lint-staged": {
@@ -38,6 +41,6 @@
   },
   "devDependencies": {
     "eslint-plugin-import": "2.6.1",
-    "eslint-plugin-jsx-a11y": "6.0.2"
+    "eslint-plugin-jsx-a11y": "5.0.3"
   }
 }

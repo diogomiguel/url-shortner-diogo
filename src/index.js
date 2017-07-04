@@ -1,40 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
+import 'sanitize.css/sanitize.css';
 
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store';
-import createRoutes, { makeSelectLocationState } from './routes';
 import App from './App';
 
+// Import default loading component provider and LoadingIndicator that will be used as a loading component
+import DefaultLoadingComponentProvider from './routing/DefaultLoadingComponentProvider';
+import LoadingIndicator from './components/LoadingIndicator';
+
+// Import CSS reset and Global Styles
+import './global-styles';
+
+const history = createHistory();
 
 // Create redux store with history
-// this uses the singleton browserHistory provided by react-router
-// Optionally, this could be changed to leverage a created history
-// e.g. `const browserHistory = useRouterHistory(createBrowserHistory)();`
-const store = configureStore({}, browserHistory);
-
-// Sync history and store, as the react-router-redux reducer
-// is under the non-default key ("routing"), selectLocationState
-// must be provided for resolving how to retrieve the "route" in the state
-const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: makeSelectLocationState(),
-});
-
-// Set up the router, wrapping all Routes in the App component
-const rootRoute = {
-  component: App,
-  childRoutes: createRoutes(store),
-};
+const store = configureStore({}, history);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router
-      history={history}
-      routes={rootRoute}
-    />
+    <DefaultLoadingComponentProvider component={LoadingIndicator}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </DefaultLoadingComponentProvider>
   </Provider>,
 document.getElementById('root'));
 

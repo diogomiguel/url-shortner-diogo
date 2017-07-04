@@ -13,7 +13,7 @@ import homePageReducer from './containers/HomePage/reducer';
  * routeReducer
  *
  * The reducer merges route location changes into our immutable state.
- * The change is necessitated by moving to react-router-redux@4
+ * The change is necessitated by moving to react-router-redux@5
  *
  */
 
@@ -22,7 +22,7 @@ import homePageReducer from './containers/HomePage/reducer';
  * @param {Map=@routeInitialState} state
  * @param {Object} action
  */
-function locationBeforeTransitions(state = null, action) {
+function location(state = null, action) {
   switch (action.type) {
     case LOCATION_CHANGE:
       return fromJS(action.payload);
@@ -30,7 +30,7 @@ function locationBeforeTransitions(state = null, action) {
       return fromJS(state);
   }
 }
-const routeReducer = combineReducers({ locationBeforeTransitions });
+const routeReducer = combineReducers({ location });
 
 /**
  * Creates the main reducer
