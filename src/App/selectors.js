@@ -23,9 +23,15 @@ const makeSelectLocation = createSelector(
   (routeState) => routeState.get('location').toJS()
 );
 
+const makeSelectMappedUrls = createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('urls').toJS()
+);
+
 export {
   selectGlobal,
   makeSelectLoading,
   makeSelectError,
   makeSelectLocation,
+  makeSelectMappedUrls,
 };
