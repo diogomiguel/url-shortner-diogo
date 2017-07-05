@@ -30,7 +30,6 @@ ReactDOM.render(
         <App />
       </ConnectedRouter>
     </DefaultLoadingComponentProvider>
-  </Provider>,
-document.getElementById('root'));
+  </Provider>, document.getElementById('root'));
 
 registerServiceWorker();

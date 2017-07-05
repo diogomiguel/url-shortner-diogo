@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import warning from 'warning';
 
 class DefaultLoadingComponentProvider extends React.Component {
+  /* eslint-disable no-undef */
   static childContextTypes = {
     defaultLoadingComponent: PropTypes.any,
   };

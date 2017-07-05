@@ -1,49 +1,37 @@
 {
-  "name": "url-shortner-code-test-diogo",
+  "name": "url-shortner-code-test-diogo-server",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "bootstrap": "3.3.7",
-    "history": "4.6.1",
-    "immutable": "3.8.1",
-    "invariant": "2.2.2",
-    "lint-staged": "4.0.0",
-    "localforage": "1.5.0",
-    "normalize-url": "1.9.1",
-    "prop-types": "15.5.10",
-    "react": "15.6.1",
-    "react-bootstrap": "0.31.0",
-    "react-dom": "15.6.1",
-    "react-loadable": "4.0.3",
-    "react-redux": "5.0.5",
-    "react-router-dom": "4.1.1",
-    "react-router-redux": "5.0.0-alpha.6",
-    "react-scripts": "1.0.10",
-    "redux": "3.6.0",
-    "redux-immutable": "4.0.0",
-    "redux-persist-immutable": "4.3.0",
-    "redux-saga": "0.15.4",
-    "reselect": "3.0.1",
-    "sanitize.css": "5.0.0",
-    "styled-components": "2.1.1",
-    "warning": "3.0.0"
+  "scripts": {
+    "precommit": "lint-staged",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node start-client.js",
+    "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
+    "lint": "npm run lint:js",
+    "lint:eslint": "eslint --ignore-path .gitignore",
+    "lint:js": "npm run lint:eslint -- . "
   },
   "lint-staged": {
     "*.js": "lint:eslint"
   },
   "pre-commit": "lint:staged",
-  "scripts": {
-    "precommit": "lint-staged",
-    "lint": "npm run lint:js",
-    "lint:eslint": "eslint --ignore-path .gitignore",
-    "lint:js": "npm run lint:eslint -- . ",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+  "dependencies": {
+    "babel-core": "6.25.0",
+    "babel-eslint": "7.2.3",
+    "body-parser": "1.17.2",
+    "eslint-config-react-app": "1.0.5",
+    "eslint-plugin-flowtype": "2.34.1",
+    "express": "4.15.3",
+    "localforage": "1.5.0",
+    "node-localstorage": "1.3.0",
+    "normalize-url": "1.9.1"
   },
   "devDependencies": {
+    "concurrently": "3.5.0",
+    "eslint": "4.1.1",
     "eslint-plugin-import": "2.6.1",
-    "eslint-plugin-jsx-a11y": "5.0.3"
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-react": "7.1.0"
   }
 }

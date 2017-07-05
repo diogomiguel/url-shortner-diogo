@@ -25,7 +25,7 @@ function* handleShortifyUrl() {
     const url = yield select(makeSelectCurUrl);
 
     if (isEmpty(url)) {
-      throw new Error('Invalid or empty URL');
+      throw new Error('Empty URL');
     }
 
     // Standardise URL format
@@ -52,7 +52,7 @@ function* handleShortifyUrl() {
     console.warn(error);
 
     // Flag this operation as an error
-    yield put(shortifyUrlError(error));
+    yield put(shortifyUrlError(error.toString()));
   }
 }
 

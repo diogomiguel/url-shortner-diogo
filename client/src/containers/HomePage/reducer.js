@@ -24,6 +24,7 @@ function error(state = false, action) {
   switch (action.type) {
     case SHORTIFY_URL_ERROR:
       return action.error;
+    case CHANGE_URL:
     case SHORTIFY_URL_SUCCESS:
       return false;
     default:

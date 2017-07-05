@@ -6,6 +6,7 @@ import { getAsyncInjectors } from '../../utils/asyncInjectors';
 
 const Loadable = ({ loader, loading: CustomLoadingComponent, ...rest }) =>
   class InnerLoadable extends React.Component {
+    /* eslint-disable no-undef */
     static contextTypes = {
       store: PropTypes.object,
       defaultLoadingComponent: PropTypes.any,

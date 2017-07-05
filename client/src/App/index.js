@@ -3,8 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import HomePage from '../containers/HomePage/Loadable';
-import RedirectPage from '../containers/RedirectPage/Loadable';
-import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
 import H1 from '../components/H1';
 
@@ -25,8 +23,6 @@ class App extends Component {
           <H1>URL Shortener</H1>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/404" component={NotFoundPage} />
-            <Route path="" component={RedirectPage} />
           </Switch>
         </AppWrapper>
       </div>

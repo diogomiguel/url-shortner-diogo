@@ -21,7 +21,7 @@ export class UrlsListItem extends React.PureComponent { // eslint-disable-line r
     const content = (
       <Wrapper>
         <ShortLink href={shortenedUrl} target="_blank">
-           {shortenedUrl}
+          {shortenedUrl}
         </ShortLink>
         <FullUrl>
           {item.url}
