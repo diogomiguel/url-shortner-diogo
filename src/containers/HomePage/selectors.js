@@ -4,6 +4,10 @@
 
 import { createSelector } from 'reselect';
 
+import { makeSelectMappedUrls } from '../../App/selectors';
+
+import { LIST_URLS_MAX } from './constants';
+
 const selectHome = (state) => state.get('home');
 
 const makeSelectLoading = createSelector(
@@ -26,9 +30,15 @@ const makeSelectLastShortified = createSelector(
   (homeState) => homeState.get('lastShortified')
 );
 
+const makeSelectRecentlyShortened = createSelector(
+  makeSelectMappedUrls,
+  (urls) => urls.slice(0, LIST_URLS_MAX)
+);
+
 export {
   makeSelectLoading,
   makeSelectError,
   makeSelectCurUrl,
   makeSelectLastShortified,
+  makeSelectRecentlyShortened,
 };

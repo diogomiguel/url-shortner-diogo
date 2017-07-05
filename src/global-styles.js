@@ -4,6 +4,8 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html,
   body {
+    color: #fff;
+    background-color: #00aba5;
     height: 100%;
     width: 100%;
   }
@@ -12,12 +14,7 @@ injectGlobal`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  body.fontLoaded {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-
   #app {
-    background-color: #fafafa;
     min-height: 100%;
     min-width: 100%;
   }

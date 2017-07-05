@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 
 import isEmpty from 'lodash/isEmpty';
 
+import { FormGroup, InputGroup, FormControl, HelpBlock, Button } from 'react-bootstrap';
+
+import H2 from '../../components/H2';
+import UrlsList from '../../components/UrlsList';
+
 import Form from './Form';
-import Input from './Input';
 import Section from './Section';
 
 import { shortifyUrl, changeUrl } from './actions';
@@ -15,7 +20,12 @@ import {
   makeSelectError,
   makeSelectCurUrl,
   makeSelectLastShortified,
+  makeSelectRecentlyShortened,
 } from './selectors';
+
+const HelpBlockWhite = styled(HelpBlock)`
+  color: #fff;
+`;
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -28,22 +38,41 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   }
 
   render() {
+    const { loading, error, mappedUrls } = this.props;
+
+    const urlListProps = {
+      loading,
+      error,
+      urls: mappedUrls,
+    };
+
     return (
-      <article>
+      <div>
         <Section>
           <Form onSubmit={this.props.onSubmitForm}>
-            <label htmlFor="url">
-              <Input
-                id="url"
-                type="text"
-                placeholder="try me..."
-                value={this.props.url}
-                onChange={this.props.onChangeUrl}
-              />
-            </label>
+            <FormGroup bsSize="large">
+              <InputGroup>
+                <FormControl
+                  type="text"
+                  id="url"
+                  placeholder="try me..."
+                  value={this.props.url}
+                  onChange={this.props.onChangeUrl}
+                />
+                <span className="input-group-btn">
+                  <Button bsSize="large" bsStyle="primary" type="submit">Submit</Button>
+                </span>
+              </InputGroup>
+              <FormControl.Feedback />
+              <HelpBlockWhite>Insert a valid URL to shorten.</HelpBlockWhite>
+            </FormGroup>
           </Form>
         </Section>
-      </article>
+        <Section>
+          <H2>Recently Shortened</H2>
+          <UrlsList {...urlListProps} />
+        </Section>
+      </div>
     );
   }
 }
@@ -56,6 +85,7 @@ HomePage.propTypes = {
   ]),
   url: PropTypes.string,
   lastShortified: PropTypes.string,
+  mappedUrls: PropTypes.array,
   onChangeUrl: PropTypes.func,
   onSubmitForm: PropTypes.func,
 };
@@ -65,6 +95,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError,
   url: makeSelectCurUrl,
   lastShortified: makeSelectLastShortified,
+  mappedUrls: makeSelectRecentlyShortened,
 });
 
 export function mapDispatchToProps(dispatch) {

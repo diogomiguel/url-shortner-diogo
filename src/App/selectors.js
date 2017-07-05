@@ -10,16 +10,6 @@ const selectRoute = (state) => state.get('route');
 
 const selectGlobalUrls = (state) => state.getIn(['global', 'urls']);
 
-const makeSelectLoading = createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('loading')
-);
-
-const makeSelectError = createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('error')
-);
-
 const makeSelectLocation = createSelector(
   selectRoute,
   (routeState) => routeState.get('location').toJS()
@@ -27,14 +17,14 @@ const makeSelectLocation = createSelector(
 
 const makeSelectMappedUrls = createSelector(
   selectGlobalUrls,
-  (urls) => urls.toJS()
+  (urls) => urls.reverse().toJS()
 );
 
 const makeSelectNextUniqueId = createSelector(
   selectGlobalUrls,
   (urls) => {
     const highestId = urls.reduceRight((sum, url) => {
-      const idNum = Number(url.get('id'));
+      const idNum = Number(url.id);
       // Return the highest id, now or the accum ?
       return Math.max(idNum, sum);
     }, 0);
@@ -45,8 +35,6 @@ const makeSelectNextUniqueId = createSelector(
 
 export {
   selectGlobal,
-  makeSelectLoading,
-  makeSelectError,
   makeSelectLocation,
   makeSelectMappedUrls,
   makeSelectNextUniqueId,

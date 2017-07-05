@@ -25,3 +25,9 @@ export const SHORTIFY_URL_SUCCESS = 'urlshortner/HomePage/SHORTIFY_URL_SUCCESS';
  * @type {String}
  */
 export const CHANGE_URL = 'urlshortner/HomePage/CHANGE_URL';
+
+/**
+ * Max number of URLs to show on recently list
+ * @type {Number}
+ */
+export const LIST_URLS_MAX = 10;
