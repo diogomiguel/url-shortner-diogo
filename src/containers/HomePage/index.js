@@ -18,6 +18,7 @@ import { shortifyUrl, changeUrl } from './actions';
 import {
   makeSelectLoading,
   makeSelectError,
+  makeSelectSuccess,
   makeSelectCurUrl,
   makeSelectLastShortified,
   makeSelectRecentlyShortened,
@@ -29,6 +30,16 @@ const HelpBlockWhite = styled(HelpBlock)`
 
 class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
+   * @constructor
+   * @param {Object} props
+   */
+  constructor(props) {
+    super(props);
+
+    this.handleChangeInputUrl = this.handleChangeInputUrl.bind(this);
+  }
+
+  /**
    * when initial state last shortified is not null, submit the form to display the last shortified
    */
   componentDidMount() {
@@ -37,33 +48,61 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     }
   }
 
+  handleChangeInputUrl(evt) {
+    // If user tries to change it when successful we start from scratch
+    if (this.props.success) {
+      this.props.onChangeUrl('');
+    } else {
+      this.props.onChangeUrl(evt.target.value);
+    }
+  }
+
   render() {
-    const { loading, error, mappedUrls } = this.props;
+    const { loading, error, success, mappedUrls, url } = this.props;
 
     const urlListProps = {
       loading,
-      error,
+      error: false,
       urls: mappedUrls,
     };
+
+    // Set form and components
+    let formValidationState = null;
+    let buttonBsStyle = 'primary';
+
+    if (error) {
+      formValidationState = 'error';
+      buttonBsStyle = 'danger';
+    } else if (success) {
+      formValidationState = 'success';
+      buttonBsStyle = 'success';
+    }
 
     return (
       <div>
         <Section>
           <Form onSubmit={this.props.onSubmitForm}>
-            <FormGroup bsSize="large">
+            <FormGroup bsSize="large" validationState={formValidationState}>
               <InputGroup>
                 <FormControl
-                  type="text"
+                  type="search"
                   id="url"
                   placeholder="try me..."
-                  value={this.props.url}
-                  onChange={this.props.onChangeUrl}
+                  value={url}
+                  onChange={this.handleChangeInputUrl}
                 />
                 <span className="input-group-btn">
-                  <Button bsSize="large" bsStyle="primary" type="submit">Submit</Button>
+                  {success ? (
+                    <Button bsSize="large" bsStyle={buttonBsStyle} type="button">
+                      Copy
+                    </Button>
+                  ) : (
+                    <Button bsSize="large" bsStyle={buttonBsStyle} type="submit" disabled={loading}>
+                      Shorten
+                    </Button>
+                  )}
                 </span>
               </InputGroup>
-              <FormControl.Feedback />
               <HelpBlockWhite>Insert a valid URL to shorten.</HelpBlockWhite>
             </FormGroup>
           </Form>
@@ -79,6 +118,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 
 HomePage.propTypes = {
   loading: PropTypes.bool,
+  success: PropTypes.bool,
   error: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.bool,
@@ -93,6 +133,7 @@ HomePage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading,
   error: makeSelectError,
+  success: makeSelectSuccess,
   url: makeSelectCurUrl,
   lastShortified: makeSelectLastShortified,
   mappedUrls: makeSelectRecentlyShortened,
@@ -100,7 +141,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeUrl: (evt) => dispatch(changeUrl(evt.target.value)),
+    onChangeUrl: (inputValue) => dispatch(changeUrl(inputValue)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(shortifyUrl());

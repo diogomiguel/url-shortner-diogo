@@ -36,7 +36,7 @@ function url(state = '', action) {
     case CHANGE_URL:
       return action.url;
     case SHORTIFY_URL_SUCCESS:
-      return '';
+      return action.urlShortified;
     default:
       return state;
   }
@@ -46,6 +46,7 @@ function lastShortified(state = null, action) {
   switch (action.type) {
     case SHORTIFY_URL_SUCCESS:
       return action.urlShortified;
+    case CHANGE_URL:
     case SHORTIFY_URL:
     case SHORTIFY_URL_ERROR:
       return null;

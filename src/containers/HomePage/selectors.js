@@ -4,6 +4,8 @@
 
 import { createSelector } from 'reselect';
 
+import isEmpty from 'lodash/isEmpty';
+
 import { makeSelectMappedUrls } from '../../App/selectors';
 
 import { LIST_URLS_MAX } from './constants';
@@ -35,10 +37,17 @@ const makeSelectRecentlyShortened = createSelector(
   (urls) => urls.slice(0, LIST_URLS_MAX)
 );
 
+const makeSelectSuccess = createSelector(
+  makeSelectError,
+  makeSelectLastShortified,
+  (isError, lastUrl) => !isError && !isEmpty(lastUrl)
+);
+
 export {
   makeSelectLoading,
   makeSelectError,
   makeSelectCurUrl,
   makeSelectLastShortified,
   makeSelectRecentlyShortened,
+  makeSelectSuccess,
 };
