@@ -1,42 +1,38 @@
-const alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"; // base58
-const base = alphabet.length;
-
-// Reference: https://stackoverflow.com/questions/742013/how-to-code-a-url-shortener
+import Base62 from 'base62';
 
 /**
- * Encode unique id to a matching string
- * @param  {Number} id
- * @return {String}
+ * @private
+ * @param  {Number} val
+ * @return Number
  */
-export function encode(id) {
-  let encoded = '';
-
-  // Base58 encode that unique ID to generate a unique, shorter URL
-  // e.g. An entry with the unique ID 10002 (base 10) will result in a base58 encoding of 3Ys
-  while (id) {
-    const remainder = id % base;
-    id = Math.floor(id / base);
-    encoded = `${alphabet[remainder]}${encoded}`;
-  }
-
-  return encoded;
+function roundFunction(val) {
+  return ((131239 * val + 15534) % 714025) / 714025
 }
 
 /**
- * Decode unique id to the final str
- * @param  {String} str
- * @return {Number}
+ * @private
+ * @param  {Number} val
+ * @return Number
  */
-export function decode(str) {
-  let decoded = 0;
+function permuteId(id) {
+  const l1 = (id >> 16) && 65535;
+  let r1 = id & 65535;
+  let l2;
+  let r2;
 
-  // Reverse lookup in alphabet
-  while (str) {
-    const index = alphabet.indexOf(str[0]);
-    const power = str.length - 1;
-    decoded += index * (Math.pow(base, power));
-    str = str.substring(1);
+  for (let i = 0; i < 2; i++) {
+    l2 = r1;
+    r2 = l1 ^ Math.floor((roundFunction(r1)*65535));
+    r1 = r2;
+    return ((r1 << 16) + l2)
   }
+}
 
-  return decoded;
+export default function createShortURL(id) {
+  // Extra permute operation to make base62 more... extra
+  // - as we don't need to decode it
+  const permutedId = Math.abs(permuteId(id));
+  const url = Base62.encode(permutedId);
+
+  return url;
 }

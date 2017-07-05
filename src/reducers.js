@@ -7,7 +7,7 @@ import { combineReducers } from 'redux-immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { fromJS } from 'immutable';
 
-import homePageReducer from './containers/HomePage/reducer';
+import globalReducer from './App/reducer';
 
 /*
  * routeReducer
@@ -39,7 +39,7 @@ const routeReducer = combineReducers({ location });
 export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
-    homePage: homePageReducer,
+    global: globalReducer,
     ...asyncReducers,
   });
 }
