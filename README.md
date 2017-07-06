@@ -76,6 +76,12 @@ git push heroku master
 
 Heroku will give you a link at which to view your live app.
 
+## What Could Be Improved (not minors)?
+
+* Add real DB instead of localstorage + stratch
+* Testing
+* Check URL format before shortening
+
 ## Credits
 
 Full stack inspired by [this](https://github.com/fullstackreact/food-lookup-demo)

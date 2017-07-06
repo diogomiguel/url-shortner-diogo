@@ -28,9 +28,7 @@ As React App is not that opinionated, a few tools of my preference have been add
 
 ## What Could Be Improved (not minors)?
 
-* Add real DB instead of localstorage + stratch
 * Interface
-* Testing coverage
 * Check URL format before submission
 * Add Meta - React Helmet
 * Cross Browser support
