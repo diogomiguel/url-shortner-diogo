@@ -19,13 +19,16 @@ import {
 import H2 from '../../components/H2';
 import UrlsList from '../../components/UrlsList';
 
+import { loadUrls } from '../../App/actions';
+import { makeSelectAppLoading, makeSelectAppError } from '../../App/selectors';
+
 import Form from './Form';
 import Section from './Section';
 
 import { shortifyUrl, changeUrl } from './actions';
 import {
-  makeSelectLoading,
-  makeSelectError,
+  makeSelectHomeLoading,
+  makeSelectHomeError,
   makeSelectSuccess,
   makeSelectCurUrl,
   makeSelectLastShortified,
@@ -53,16 +56,22 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   }
 
   /**
-   * When initial state last shortified is not null, submit the form to display the last shortified
+   * Orchestrates operations that need doing after component mounts
    */
   componentDidMount() {
+    // Load recently shortened list on mount
+    this.props.loadList();
+
+    // When initial state last shortified is not null, submit the form to display the last shortified
     if (!isEmpty(this.props.url)) {
-      this.props.onSubmitForm();
+      this.props.submitForm();
     }
   }
 
   /**
    * When component is flagged for updating set copied state to false if no longer in submit success mode
+   * @params [object] nextProps
+   * @params [object] nextState
    */
   componentWillUpdate(nextProps, nextState) {
     // This is needed to keep our comp state in sink with the app state
@@ -73,13 +82,14 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 
   /**
    * Keeps input value in-synch with state
+   * @params {HtmlEvent} evt
    */
   handleChangeInputUrl(evt) {
     // If user tries to change it when successful we start from scratch
     if (this.props.success) {
-      this.props.onChangeUrl('');
+      this.props.changeUrl('');
     } else {
-      this.props.onChangeUrl(evt.target.value);
+      this.props.changeUrl(evt.target.value);
     }
   }
 
@@ -105,11 +115,22 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   }
 
   render() {
-    const { loading, error, success, mappedUrls, url, lastShortified } = this.props;
+    const {
+      loading,
+      error,
+      success,
+      mappedUrls,
+      url,
+      lastShortified,
+      isListLoading,
+      isListError,
+    } = this.props;
+
+
 
     const urlListProps = {
-      loading,
-      error: false, // TODO pass error to this component
+      loading: isListLoading,
+      error: isListError,
       urls: mappedUrls,
     };
 
@@ -129,7 +150,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     return (
       <div>
         <Section>
-          <Form onSubmit={this.props.onSubmitForm}>
+          <Form onSubmit={this.props.submitForm}>
             <FormGroup bsSize="large" validationState={formValidationState}>
               <InputGroup>
                 <FormControl
@@ -163,7 +184,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
                   )}
                 </span>
               </InputGroup>
-              {success || error 
+              {success || error
                 ? this.renderFeedback()
                 : (
                   <HelpBlockWhite>Insert a valid URL to shorten.</HelpBlockWhite>
@@ -181,32 +202,54 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
 }
 
 HomePage.propTypes = {
+  /** @type {Boolean} is app still posting URL to API? **/
   loading: PropTypes.bool,
+  /** @type {Boolean} was the last action a successful post submission? **/
   success: PropTypes.bool,
+  /** @type {String|Boolean} did the last action produce an error? Which? **/
   error: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
   ]),
+  /** @type {String} user input value. When success it will be the shortened URL returned **/
   url: PropTypes.string,
+  /** @type {String} the last successfully shortened URL if there is one **/
   lastShortified: PropTypes.string,
+  /** @type {Array} list of recently shortened URLs **/
   mappedUrls: PropTypes.array,
-  onChangeUrl: PropTypes.func,
-  onSubmitForm: PropTypes.func,
+  /** @type {Boolean} if app is loading so is the list **/
+  isListLoading: PropTypes.bool,
+  /** @type {String|Boolean} if app has an error it means the list failed to retrieve its items **/
+  isListError: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
+  /** @type {Function} when called fetches a new list of URLs **/
+  loadList: PropTypes.func,
+  /** @type {Function} when called updates the url value in state **/
+  changeUrl: PropTypes.func,
+  /** @type {Function} when called submits the current url value to be shortified **/
+  submitForm: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  loading: makeSelectLoading,
-  error: makeSelectError,
+  // Form
+  loading: makeSelectHomeLoading,
+  error: makeSelectHomeError,
   success: makeSelectSuccess,
   url: makeSelectCurUrl,
   lastShortified: makeSelectLastShortified,
+  // URLs List
+  isListLoading: makeSelectAppLoading,
+  isListError: makeSelectAppError,
   mappedUrls: makeSelectRecentlyShortened,
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeUrl: (inputValue) => dispatch(changeUrl(inputValue)),
-    onSubmitForm: (evt) => {
+    loadList: () => dispatch(loadUrls()),
+    changeUrl: (inputValue) => dispatch(changeUrl(inputValue)),
+    submitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(shortifyUrl());
     },

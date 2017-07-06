@@ -9,32 +9,45 @@
  */
 
 import {
-  ADD_URL,
-  REMOVE_URL,
+  LOAD_URLS,
+  LOAD_URLS_SUCCESS,
+  LOAD_URLS_ERROR,
 } from './constants';
 
 /**
- * Adds a shortfied URL to our state
+ * This action triggers saga responsible to retrieve list of saved URLs from API
  *
- * @param {array} urlMapped
- * @return {object} An action object with a type of ADD_URL
+ * @return {object} An action object with a type of LOAD_URLS
  */
-export function addUrl(urlMapped) {
+export function loadUrls() {
   return {
-    type: ADD_URL,
-    urlMapped,
+    type: LOAD_URLS,
   };
 }
 
 /**
- * Removes an URL by id from our state
+ * Action will save to state all the urls returned by API
  *
  * @param {number} id
- * @return {object} An action object with a type of REMOVE_URL
+ * @return {object} An action object with a type of LOAD_URLS_SUCCESS
  */
-export function removeUrl(id) {
+export function loadUrlsSuccess(urls) {
   return {
-    type: REMOVE_URL,
-    id,
+    type: LOAD_URLS_SUCCESS,
+    urls,
   };
 }
+
+/**
+ * Action will flag that API returned an error at retrieving the URL list
+ *
+ * @param {string} error
+ * @return {object} An action object with a type of LOAD_URLS_ERROR
+ */
+export function loadUrlsError(error) {
+  return {
+    type: LOAD_URLS_ERROR,
+    error,
+  };
+}
+

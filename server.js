@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3001);
 
 // Encode url on post in the main route
-// e.g. curl localhost:3001 -XPOST -d '{ "url": "http://www.farmdrop.com" }' -H 'content-type:application/json' 
-app.post('/api/urls/encode', (req, res) => {
+// e.g. curl localhost:3001 -XPOST -d '{ "url": "http://www.farmdrop.com" }' -H 'content-type:application/json'
+app.post('/api/urls/shortify', (req, res) => {
   // Check we have what we need
   // ToDo validate URL format
   if (!req.body || !req.body.url) {
@@ -68,7 +68,7 @@ app.get('/:hash', (req, res) => {
   } else {
     // HTTP status 404: NotFound
     res
-      .status(404) 
+      .status(404)
       .send('Url not found');
   }
 });

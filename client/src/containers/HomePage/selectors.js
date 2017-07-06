@@ -12,12 +12,12 @@ import { LIST_URLS_MAX } from './constants';
 
 const selectHome = (state) => state.get('home');
 
-const makeSelectLoading = createSelector(
+const makeSelectHomeLoading = createSelector(
   selectHome,
   (homeState) => homeState.get('loading')
 );
 
-const makeSelectError = createSelector(
+const makeSelectHomeError = createSelector(
   selectHome,
   (homeState) => homeState.get('error')
 );
@@ -38,14 +38,14 @@ const makeSelectRecentlyShortened = createSelector(
 );
 
 const makeSelectSuccess = createSelector(
-  makeSelectError,
+  makeSelectHomeError,
   makeSelectLastShortified,
   (isError, lastUrl) => !isError && !isEmpty(lastUrl)
 );
 
 export {
-  makeSelectLoading,
-  makeSelectError,
+  makeSelectHomeLoading,
+  makeSelectHomeError,
   makeSelectCurUrl,
   makeSelectLastShortified,
   makeSelectRecentlyShortened,

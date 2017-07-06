@@ -21,6 +21,7 @@ class App extends Component {
       <div id="app">
         <AppWrapper>
           <H1>URL Shortener</H1>
+          {/* Only one route. All the others are proxied and handled by express */}
           <Switch>
             <Route exact path="/" component={HomePage} />
           </Switch>

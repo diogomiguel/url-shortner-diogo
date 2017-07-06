@@ -12,6 +12,7 @@ function UrlsList({ loading, error, urls }) {
   }
 
   if (error !== false) {
+    // TODO - improve error styling
     const ErrorComponent = () => (
       <ListItem item={'Something went wrong, please try again!'} />
     );

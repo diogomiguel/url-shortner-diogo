@@ -1,4 +1,5 @@
 // Le fake model based on a localstorage
+// JUST AS AN EXAMPLE: NOT PRODUCTION READY
 
 const KEY_NAME = 'listShortened';
 require('./config');
@@ -39,7 +40,6 @@ exports.getLastStoredUniqId = () => {
   // Not completely bullet proof. Just for prototyping purposes
   const highestId = listStored.reduce((sum, url) => {
     const idNum = Number(url.id);
-    // Return the highest id, now or the accum ?
     return Math.max(idNum, sum);
   }, 0);
 

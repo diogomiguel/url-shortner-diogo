@@ -15,7 +15,7 @@ import Wrapper from './Wrapper';
 export class UrlsListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     const item = this.props.item;
-    const shortenedUrl = `${process.env.REACT_APP_SHORTIFY_HOST}/${item.hash}`;
+    const shortenedUrl = `${process.env.REACT_APP_SHORTIFY_HOST}${item.short_url}`;
 
     // Put together the content of the repository
     const content = (

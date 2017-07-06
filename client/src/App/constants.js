@@ -2,18 +2,24 @@
  * AppConstants
  * Each action has a corresponding type, which the reducer knows and picks up on.
  * To avoid weird typos between the reducer and the actions, we save them as
- * constants here. We prefix them with 'yourproject/YourComponent' so we avoid
+ * constants here. We prefix them with 'urlshortner/Component' so we avoid
  * reducers accidentally picking up actions they shouldn't.
  */
 
 /**
- * type for addUrl action
+ * type for loadUrls action
  * @type {String}
  */
-export const ADD_URL = 'urlshortner/App/ADD_URL';
+export const LOAD_URLS = 'urlshortner/App/LOAD_URLS';
 
 /**
- * type for removeUrl action
+ * type for loadUrlsSuccess action
  * @type {String}
  */
-export const REMOVE_URL = 'urlshortner/App/REMOVE_URL';
+export const LOAD_URLS_SUCCESS = 'urlshortner/App/LOAD_URLS_SUCCESS';
+
+/**
+ * type for loadUrlsError action
+ * @type {String}
+ */
+export const LOAD_URLS_ERROR = 'urlshortner/App/LOAD_URLS_ERROR';

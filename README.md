@@ -65,7 +65,7 @@ git commit -m 'Adding `build` to source control'
 **3. Create the Heroku app**
 
 ```
-heroku apps:create food-lookup-demo
+heroku apps:create url-shortner-diogo
 ```
 
 **4. Push to Heroku**
@@ -75,3 +75,8 @@ git push heroku master
 ```
 
 Heroku will give you a link at which to view your live app.
+
+## Credits
+
+Full stack inspired by [this](https://github.com/fullstackreact/food-lookup-demo)
+
