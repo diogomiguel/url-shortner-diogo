@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ListItem from 'components/ListItem';
+import ListItem from '../../ListItem';
 import List from '../index';
 
 describe('<List />', () => {
