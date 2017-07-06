@@ -3,8 +3,8 @@ import ReactLoadable from 'react-loadable';
 import createMemoryHistory from 'history/createMemoryHistory';
 import { shallow } from 'enzyme';
 
-import configureStore from 'store';
-import * as asyncInjectors from 'utils/asyncInjectors';
+import configureStore from '../../../store';
+import * as asyncInjectors from '../../../utils/asyncInjectors';
 import Loadable from '../index';
 
 jest.mock('react-loadable', () => jest.fn().mockImplementation(() => () => null));

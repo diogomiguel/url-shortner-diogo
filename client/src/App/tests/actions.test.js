@@ -22,7 +22,7 @@ describe('App Actions', () => {
   });
 
   describe('loadUrlsSuccess', () => {
-    it('should return the correct type and the passed repos', () => {
+    it('should return the correct type and the passed urls', () => {
       const fixture = ['Test'];
       const expectedResult = {
         type: LOAD_URLS_SUCCESS,

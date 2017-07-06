@@ -18,7 +18,7 @@ import { makeSelectCurUrl } from './selectors';
 /**
  * Handles side-effect of shortifyUrl action
  */
-function* handleShortifyUrl() {
+export function* handleShortifyUrl() {
   try {
     // Get our cur input URL = input value
     const url = yield select(makeSelectCurUrl);
@@ -50,7 +50,7 @@ function* handleShortifyUrl() {
 /**
  * Handles side-effect of loadUrls action
  */
-function* handleLoadUrls() {
+export function* handleLoadUrls() {
   try {
     // Send through our Client the request to the proxied API
     const response = yield call(Client.getUrls);

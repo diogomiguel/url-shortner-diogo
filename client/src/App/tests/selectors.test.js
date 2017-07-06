@@ -18,7 +18,7 @@ describe('selectGlobal', () => {
   });
 });
 
-describe('makeSelectLoading', () => {
+describe('makeSelectAppLoading', () => {
   const loadingSelector = makeSelectAppLoading;
   it('should select the loading', () => {
     const loading = false;
@@ -31,7 +31,7 @@ describe('makeSelectLoading', () => {
   });
 });
 
-describe('makeSelectError', () => {
+describe('makeSelectAppError', () => {
   const errorSelector = makeSelectAppError;
   it('should select the error', () => {
     const error = 404;

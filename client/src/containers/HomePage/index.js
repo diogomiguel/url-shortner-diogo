@@ -39,7 +39,7 @@ const HelpBlockWhite = styled(HelpBlock)`
   color: #fff;
 `;
 
-class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * @constructor
    * @param {Object} props
@@ -60,11 +60,11 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
    */
   componentDidMount() {
     // Load recently shortened list on mount
-    this.props.loadList();
+    this.props.onMountLoad();
 
     // When initial state last shortified is not null, submit the form to display the last shortified
     if (!isEmpty(this.props.url)) {
-      this.props.submitForm();
+      this.props.onSubmitForm();
     }
   }
 
@@ -87,9 +87,9 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
   handleChangeInputUrl(evt) {
     // If user tries to change it when successful we start from scratch
     if (this.props.success) {
-      this.props.changeUrl('');
+      this.props.onChangeUrl('');
     } else {
-      this.props.changeUrl(evt.target.value);
+      this.props.onChangeUrl(evt.target.value);
     }
   }
 
@@ -150,7 +150,7 @@ class HomePage extends React.PureComponent { // eslint-disable-line react/prefer
     return (
       <div>
         <Section>
-          <Form onSubmit={this.props.submitForm}>
+          <Form onSubmit={this.props.onSubmitForm}>
             <FormGroup bsSize="large" validationState={formValidationState}>
               <InputGroup>
                 <FormControl
@@ -225,11 +225,11 @@ HomePage.propTypes = {
     PropTypes.bool,
   ]),
   /** @type {Function} when called fetches a new list of URLs **/
-  loadList: PropTypes.func,
+  onMountLoad: PropTypes.func.isRequired,
   /** @type {Function} when called updates the url value in state **/
-  changeUrl: PropTypes.func,
+  onChangeUrl: PropTypes.func.isRequired,
   /** @type {Function} when called submits the current url value to be shortified **/
-  submitForm: PropTypes.func,
+  onSubmitForm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -247,9 +247,9 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    loadList: () => dispatch(loadUrls()),
-    changeUrl: (inputValue) => dispatch(changeUrl(inputValue)),
-    submitForm: (evt) => {
+    onMountLoad: () => dispatch(loadUrls()),
+    onChangeUrl: (inputValue) => dispatch(changeUrl(inputValue)),
+    onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(shortifyUrl());
     },
