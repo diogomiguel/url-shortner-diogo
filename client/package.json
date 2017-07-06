@@ -44,6 +44,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "chai": "4.0.2",
     "enzyme": "2.9.1",
     "react-dom": "15.6.1",
     "react-test-renderer": "15.6.1"

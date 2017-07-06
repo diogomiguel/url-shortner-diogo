@@ -1,51 +1,47 @@
 import {
-  LOAD_REPOS,
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS_ERROR,
+  LOAD_URLS,
+  LOAD_URLS_SUCCESS,
+  LOAD_URLS_ERROR,
 } from '../constants';
 
 import {
-  loadRepos,
-  reposLoaded,
-  repoLoadingError,
+  loadUrls,
+  loadUrlsSuccess,
+  loadUrlsError,
 } from '../actions';
 
 describe('App Actions', () => {
-  describe('loadRepos', () => {
+  describe('loadUrls', () => {
     it('should return the correct type', () => {
       const expectedResult = {
-        type: LOAD_REPOS,
+        type: LOAD_URLS,
       };
 
-      expect(loadRepos()).toEqual(expectedResult);
+      expect(loadUrls()).toEqual(expectedResult);
     });
   });
 
-  describe('reposLoaded', () => {
+  describe('loadUrlsSuccess', () => {
     it('should return the correct type and the passed repos', () => {
       const fixture = ['Test'];
-      const username = 'test';
       const expectedResult = {
-        type: LOAD_REPOS_SUCCESS,
-        repos: fixture,
-        username,
+        type: LOAD_URLS_SUCCESS,
+        urls: fixture,
       };
 
-      expect(reposLoaded(fixture, username)).toEqual(expectedResult);
+      expect(loadUrlsSuccess(fixture)).toEqual(expectedResult);
     });
   });
 
-  describe('repoLoadingError', () => {
+  describe('loadUrlsError', () => {
     it('should return the correct type and the error', () => {
-      const fixture = {
-        msg: 'Something went wrong!',
-      };
+      const fixture = 'Something went wrong!';
       const expectedResult = {
-        type: LOAD_REPOS_ERROR,
+        type: LOAD_URLS_ERROR,
         error: fixture,
       };
 
-      expect(repoLoadingError(fixture)).toEqual(expectedResult);
+      expect(loadUrlsError(fixture)).toEqual(expectedResult);
     });
   });
 });

@@ -2,10 +2,9 @@ import { fromJS } from 'immutable';
 
 import {
   selectGlobal,
-  makeSelectCurrentUser,
-  makeSelectLoading,
-  makeSelectError,
-  makeSelectRepos,
+  makeSelectAppLoading,
+  makeSelectAppError,
+  makeSelectMappedUrls,
   makeSelectLocation,
 } from '../selectors';
 
@@ -19,21 +18,8 @@ describe('selectGlobal', () => {
   });
 });
 
-describe('makeSelectCurrentUser', () => {
-  const currentUserSelector = makeSelectCurrentUser();
-  it('should select the current user', () => {
-    const username = 'mxstbr';
-    const mockedState = fromJS({
-      global: {
-        currentUser: username,
-      },
-    });
-    expect(currentUserSelector(mockedState)).toEqual(username);
-  });
-});
-
 describe('makeSelectLoading', () => {
-  const loadingSelector = makeSelectLoading();
+  const loadingSelector = makeSelectAppLoading;
   it('should select the loading', () => {
     const loading = false;
     const mockedState = fromJS({
@@ -46,7 +32,7 @@ describe('makeSelectLoading', () => {
 });
 
 describe('makeSelectError', () => {
-  const errorSelector = makeSelectError();
+  const errorSelector = makeSelectAppError;
   it('should select the error', () => {
     const error = 404;
     const mockedState = fromJS({
@@ -58,26 +44,32 @@ describe('makeSelectError', () => {
   });
 });
 
-describe('makeSelectRepos', () => {
-  const reposSelector = makeSelectRepos();
+describe('makeSelectMappedUrls', () => {
+  const mappedUrlsSelector = makeSelectMappedUrls;
   it('should select the repos', () => {
-    const repositories = fromJS([]);
+    const urls = fromJS([{
+      id: 10,
+      short_url: `/8AF`,
+      url: 'http://www.maria.pt',
+    }, {
+      id: 11,
+      short_url: `/EAF`,
+      url: 'http://www.maria2.pt',
+    }]);
     const mockedState = fromJS({
       global: {
-        userData: {
-          repositories,
-        },
+        urls,
       },
     });
-    expect(reposSelector(mockedState)).toEqual(repositories);
+    expect(mappedUrlsSelector(mockedState)).toEqual(urls.reverse().toJS());
   });
 });
 
 describe('makeSelectLocation', () => {
-  const locationStateSelector = makeSelectLocation();
+  const locationStateSelector = makeSelectLocation;
   it('should select the location', () => {
     const route = fromJS({
-      location: { pathname: '/foo' },
+      location: { pathname: '/pois' },
     });
     const mockedState = fromJS({
       route,
