@@ -27,10 +27,10 @@ describe('<HomePage />', () => {
   it('should call onMountLoad on mount', () => {
     const mountLoadSpy = jest.fn();
     mount(
-        <HomePage
-          {...fixtureRequireds}
-          onMountLoad={mountLoadSpy}
-        />
+      <HomePage
+        {...fixtureRequireds}
+        onMountLoad={mountLoadSpy}
+      />
     );
     expect(mountLoadSpy).toHaveBeenCalled();
   });
@@ -38,11 +38,11 @@ describe('<HomePage />', () => {
   it('should call onSubmitForm on mount if state input url value not empty', () => {
     const submitSpy = jest.fn();
     mount(
-        <HomePage
-          {...fixtureRequireds}
-          url="Not Empty"
-          onSubmitForm={submitSpy}
-        />
+      <HomePage
+        {...fixtureRequireds}
+        url="Not Empty"
+        onSubmitForm={submitSpy}
+      />
     );
     expect(submitSpy).toHaveBeenCalled();
   });
@@ -50,10 +50,10 @@ describe('<HomePage />', () => {
   it('should not call onSubmitForm if state input url value is an empty string', () => {
     const submitSpy = jest.fn();
     mount(
-        <HomePage
-          {...fixtureRequireds}
-          onSubmitForm={submitSpy}
-        />
+      <HomePage
+        {...fixtureRequireds}
+        onSubmitForm={submitSpy}
+      />
     );
     expect(submitSpy).not.toHaveBeenCalled();
   });
@@ -61,11 +61,11 @@ describe('<HomePage />', () => {
   it('should not call onSubmitForm if state input url value is null', () => {
     const submitSpy = jest.fn();
     mount(
-        <HomePage
-          {...fixtureRequireds}
-          url=""
-          onSubmitForm={submitSpy}
-        />
+      <HomePage
+        {...fixtureRequireds}
+        url=""
+        onSubmitForm={submitSpy}
+      />
     );
     expect(submitSpy).not.toHaveBeenCalled();
   });
